@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select a Question</title>
+    <style>
+        /* Style for the admin dashboard button */
+        .admin-dashboard-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .question-button{
+            display: block;/* Make the button take up the full width */
+            margin-bottom: 10px; /* Adds some space between the buttons */
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a Question</h1>
+    <div id="questionList">
+        <!-- Questions will be added dynamically here -->
+    </div>
+
+    <!-- Button to navigate to the admin dashboard -->
+    <a href="/admin_dashboard" class="admin-dashboard-button">Admin Dashboard</a>
+
+    <script type="text/javascript">
+        function getQuestions() {
+            var questionList = document.getElementById("questionList");
+            var source = new EventSource("/get_messages/questions");
+            source.onmessage = function (event) {
+                var question = event.data.trim();
+                if (question) {
+                    var button = document.createElement("button");
+                    button.textContent = question;
+                    button.className = "question-button";
+                    button.onclick = function () {
+                        window.location.href = "/riddle?topic=" + encodeURIComponent(question);
+                    };
+                    questionList.appendChild(button);
+                }
+            };
+        }
+
+        getQuestions();
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        #chatbox {
+            height: 400px; 
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        #messages p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Messages for topic: {{ topic }}</h1>
+    <div id="chatbox">
+        <div id="messages">
+        </div>
+    </div>
+    <div>
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="sendButton">Send</button>
+        <form action="/" method="GET">
+            <input type="submit" value="Question Selection">
+        </form>
+    </div>
+    <script type="text/javascript">
+        var source = new EventSource("/get_messages/{{ topic }}");
+        source.onmessage = function(event) {
+            var messages = document.getElementById("messages");
+            var newMessage = document.createElement("p");
+            newMessage.textContent = event.data;
+            messages.appendChild(newMessage);
+            messages.scrollTop = messages.scrollHeight;
+        };
+
+        var sendButton = document.getElementById("sendButton");
+        var messageInput = document.getElementById("messageInput");
+
+        sendButton.addEventListener("click", function() {
+            var message = messageInput.value.trim();
+            if (message !== "") {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/produce_message", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send("guess=" + message + "&topic={{ topic }}");
+                messageInput.value = "";
+            }
+        });
+
+        messageInput.addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) {
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>

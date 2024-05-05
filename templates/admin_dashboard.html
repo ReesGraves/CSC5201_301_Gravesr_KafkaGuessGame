@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <ul>
+        <!-- Button for every admin option -->
+        {% for route in admin_routes %}
+        <li>
+            <form action="{{ route }}" method="get">
+                <!-- the route, slice the first char off, replace underscores with spaces -->
+                <input type="submit" value="{{ route|replace('/', '')|replace('_', ' ') }}" class="nav-button">
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <form action="/" method="get">
+        <input type="submit" value="Home" class="nav-button">
+    </form>
+</body>
+</html>

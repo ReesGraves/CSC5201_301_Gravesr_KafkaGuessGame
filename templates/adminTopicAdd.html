@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Message Creation</title>
+</head>
+<body>
+    <h1>Create New Question</h1>
+    <form action="/admin_create_question" method="post">
+        <label for="question">Question:</label><br>
+        <input type="text" id="question" name="question"><br>
+        <label for="answer">Answer:</label><br>
+        <input type="text" id="answer" name="answer"><br>
+        <input type="submit" value="Create Question">
+    </form>
+    <!-- Button to return to the admin topic dashboard -->
+    <form action="/admin_dashboard" method="get">
+        <input type="submit" value="Return to Admin Dashboard" class="nav-button">
+    </form>
+</body>
+</html>

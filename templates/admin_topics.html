@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Topics</title>
+</head>
+<body>
+    <h1>Admin Topics</h1>
+    <ul>
+        {% for topic in topics %}
+        <li>
+            {{ topic }}
+            <form action="{{ url_for('delete_topic', topic=topic) }}" method="post">
+                <input type="submit" value="Delete Topic">
+            </form>
+            <a href="{{ url_for('view_messages', topic=topic) }}">View Messages</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

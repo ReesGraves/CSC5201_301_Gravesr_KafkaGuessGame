@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usage Stats</title>
+</head>
+<body>
+    <h1>Endpoint Usage Statistics</h1>
+    <table>
+        <tr>
+            <th>Endpoint</th>
+            <th>Usage Count</th>
+        </tr>
+        {% for endpoint, count in stats %}
+        <tr>
+            <td>{{ endpoint }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatPage</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+    <style>
+        .chat-container {
+            margin-top: 50px;
+        }
+
+        .chat-messages {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-bottom: 10px;
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+        }
+
+        .chat-message .content {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f2f2f2;
+        }
+
+        .chat-message .content::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .chat-message .content .user {
+            font-weight: bold;
+        }
+
+        .chat-message .content .message {
+            margin-top: 5px;
+        }
+
+        .chat-message .meta {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui container chat-container">
+        <h1 class="ui center aligned header">{{topic}}</h1>
+
+        <div class="ui form">
+            <form action="/produce_message" method="post">
+                <div class="field">
+                    <label>Your Guess:</label>
+                    <input type="text" name="guess" placeholder="Enter Guess..."><br>
+                </div>
+                <button class="ui blue button" type="submit">Send</button>
+            </form>
+        </div>
+
+
+        <hr>
+
+        <div class="chat-messages">
+            {% for message in message_list %}
+            <div class="chat-message">
+                <div class="content">
+                    <span class="user">User</span>
+                    <div class="message">{{ message }}</div>
+                </div>
+                <div class="meta">Sent at {{ message.timestamp }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
